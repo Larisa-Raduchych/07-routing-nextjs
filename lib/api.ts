@@ -14,9 +14,15 @@ axios.defaults.headers.common["Authorization"] =
 export const fetchNotes = async (
   search: string,
   page: number,
+  tag?: string,
 ): Promise<FetchNotesResponse> => {
   const response = await axios.get<FetchNotesResponse>(BASE_URL, {
-    params: { search, page, perPage: 12 },
+    params: {
+      search,
+      page,
+      perPage: 12,
+      ...(tag && tag !== "all" ? { tag } : {}),
+    },
   });
   return response.data;
 };
